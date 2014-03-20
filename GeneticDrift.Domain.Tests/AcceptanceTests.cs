@@ -23,13 +23,16 @@ namespace GeneticDrift.Domain.Tests
             var permutations = new List<int>();
             Array.ForEach(input.Split(' ').Skip(1).ToArray(), s => permutations.Add(int.Parse(s)));
             var orientedPairs = new List<OrientedPair>();
+            var neg = permutations.FindAll(p => p < 0);
+            var pos = permutations.FindAll(p => p >= 0);
 
-            foreach (var p1 in permutations)
+            foreach (var p1 in pos)
             {
-                if (p1 < 0)
-                    orientedPairs.AddRange(OrientedPairs(p1, permutations, p => p >= 0));
-                else
-                    orientedPairs.AddRange(OrientedPairs(p1, permutations, p => p < 0));
+                orientedPairs.AddRange(from p2 in neg
+                                       where Neighbours(p1, p2)
+                                       let i1 = permutations.IndexOf(p1)
+                                       let i2 = permutations.IndexOf(p2)
+                                       select i1 < i2 ? new OrientedPair(p1, p2) : new OrientedPair(p2, p1));
             }
 
             orientedPairs = orientedPairs.OrderBy(p => p.x).ToList();
@@ -39,29 +42,9 @@ namespace GeneticDrift.Domain.Tests
                 Is.EqualTo(expected), "oriented pairs");
         }
 
-        private static IEnumerable<OrientedPair> OrientedPairs(int p1, List<int> permutations, Predicate<int> predicate)
-        {
-            var orientedPairs = new List<OrientedPair>();
-            var toCompare = permutations.FindAll(predicate);
-
-            foreach (var p2 in toCompare)
-            {
-                if (! Neighbours(p1, p2)) continue;
-
-                var i1 = permutations.IndexOf(p1);
-                var i2 = permutations.IndexOf(p2);
-                orientedPairs.Add(i1 < i2 ? new OrientedPair(p1, p2) : new OrientedPair(p2, p1));
-            }
-
-            return orientedPairs;
-        }
-
         private static bool Neighbours(int p1, int p2)
         {
-            if (p1 < 0 && p2 < 0)
-                return false;
-
-            return Math.Abs(p1) - Math.Abs(p2) == 1;
+            return Math.Abs(Math.Abs(p1) - Math.Abs(p2)) == 1;
         }
     }
 
