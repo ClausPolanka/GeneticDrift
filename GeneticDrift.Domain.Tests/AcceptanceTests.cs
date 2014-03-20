@@ -10,6 +10,8 @@ namespace GeneticDrift.Domain.Tests
     [TestFixture]
     public class AcceptanceTests
     {
+        private const char WHITE_SPACE = ' ';
+
         [TestCase("6 3 1 6 5 -2 4", "2 1 -2 3 -2")]
         [TestCase("8 0 3 1 6 5 -2 4 7", "2 1 -2 3 -2")]
         [TestCase("9 3 1 6 5 -2 4 -7 8 9", "4 -7 8 1 -2 3 -2 6 -7")]
@@ -21,7 +23,7 @@ namespace GeneticDrift.Domain.Tests
         public void Level_1(string input, string expected)
         {
             var permutations = new List<int>();
-            Array.ForEach(input.Split(' ').Skip(1).ToArray(), s => permutations.Add(int.Parse(s)));
+            Array.ForEach(input.Split(WHITE_SPACE).Skip(1).ToArray(), s => permutations.Add(int.Parse(s)));
             var orientedPairs = new List<OrientedPair>();
             var neg = permutations.FindAll(p => p < 0);
             var pos = permutations.FindAll(p => p >= 0);
@@ -38,7 +40,7 @@ namespace GeneticDrift.Domain.Tests
             orientedPairs = orientedPairs.OrderBy(p => p.x).ToList();
 
             Assert.That(
-                string.Format("{0} {1}", orientedPairs.Count, string.Join(" ", orientedPairs)),
+                string.Format("{0} {1}", orientedPairs.Count, string.Join(WHITE_SPACE.ToString(), orientedPairs)),
                 Is.EqualTo(expected), "oriented pairs");
         }
 
