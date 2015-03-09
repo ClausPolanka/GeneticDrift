@@ -22,6 +22,17 @@ namespace GeneticDrift.Domain.Tests
             var expected = new List<int[]> { new[] { nr1, nr2 } };
             Equalidator.AreEqual(actual, expected, true);
         }
+        
+        [TestCase(0, 1)]
+        public void Permutation_containing_two_numbers_not_an_oriented_pair(int nr1, int nr2)
+        {
+            var sut = new OrientedPairsFinder();
+
+            var actual = sut.Find(nr1, nr2);
+
+            var expected = new List<int[]>();
+            Equalidator.AreEqual(actual, expected, true);
+        }
 
         [TestCase(1, -2, 3)]
         public void Permutation_containing_three_numbers_with_two_in_order_oriented_pairs(int nr1, int nr2, int nr3)
@@ -94,8 +105,22 @@ namespace GeneticDrift.Domain.Tests
             var orientedPairs = finder.Find(permutation);
             var ordered = orientedPairs.OrderBy(op => op[0]).ToList();
             var sut = new OrientedPairsToStringConverter();
-            
+
             var actual = sut.Convert(ordered);
+
+            Assert.That(actual, Is.EqualTo("2 1 -2 3 -2"), "oriented pairs");
+        }
+
+        [Test]
+        public void Level_1_Input_1()
+        {
+            var permutation = new[] { 8, 0, 3, 1, 6, 5, -2, 4, 7 };
+
+            var orderedOrientedPairs = new OrientedPairsFinder()
+                .Find(permutation.Skip(1).ToArray())
+                .OrderBy(op => op[0]).ToList();
+
+            var actual = new OrientedPairsToStringConverter().Convert(orderedOrientedPairs);
 
             Assert.That(actual, Is.EqualTo("2 1 -2 3 -2"), "oriented pairs");
         }
