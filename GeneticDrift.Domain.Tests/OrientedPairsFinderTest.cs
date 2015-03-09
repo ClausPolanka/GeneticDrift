@@ -22,6 +22,21 @@ namespace GeneticDrift.Domain.Tests
             var expected = new List<int[]> { new[] { nr1, nr2 } };
             Equalidator.AreEqual(actual, expected, true);
         }
+
+        [TestCase(1, -2, 3)]
+        public void Permutation_containing_three_numbers(int nr1, int nr2, int nr3)
+        {
+            var sut = new OrientedPairsFinder();
+
+            var actual = sut.Find(nr1, nr2, nr3);
+
+            var expected = new List<int[]>
+            {
+                new[] { nr1, nr2 },
+                new[] { nr2, nr3 },
+            };
+            Equalidator.AreEqual(actual, expected, true);
+        }
     }
 
     public class OrientedPairsFinder
