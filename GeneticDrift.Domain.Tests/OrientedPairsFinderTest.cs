@@ -139,7 +139,7 @@ namespace GeneticDrift.Domain.Tests
             Assert.That(actual, Is.EqualTo("4 -7 8 1 -2 3 -2 6 -7"), "oriented pairs");
         }
 
-        //[Test]
+        [Test]
         public void Level_1_Input_3()
         {
             var permutation = new[] { 8, 0, -5, -6, -1, -3, -2, 4, 7 };
