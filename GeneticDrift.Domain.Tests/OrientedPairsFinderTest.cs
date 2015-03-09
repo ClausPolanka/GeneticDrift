@@ -14,8 +14,11 @@ namespace GeneticDrift.Domain.Tests
         [TestCase(1, -2)]
         public void Permutation_containing_two_numbers(int nr1, int nr2)
         {
+            var sut = new OrientedPairsFinder();
+
+            var actual = sut.Find(nr1, nr2);
+
             var expected = new List<int[]> { new[] { nr1, nr2 } };
-            var actual = new OrientedPairsFinder().Find(nr1, nr2);
             Equalidator.AreEqual(actual, expected, true);
         }
     }
@@ -24,7 +27,13 @@ namespace GeneticDrift.Domain.Tests
     {
         public IEnumerable<int[]> Find(params int[] numbers)
         {
-            return new List<int[]> { new int[] {} };
+            var result = new List<int[]>();
+            var sum = numbers[0] + numbers[1];
+            
+            if (sum == -1)
+                result.Add(new[] { numbers[0], numbers[1] });
+            
+            return result;
         }
     }
 }
