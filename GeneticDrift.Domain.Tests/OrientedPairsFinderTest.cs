@@ -52,7 +52,6 @@ namespace GeneticDrift.Domain.Tests
             };
             Equalidator.AreEqual(actual, expected, true);
         }
-
     }
 
     public class OrientedPairsFinder
@@ -65,11 +64,17 @@ namespace GeneticDrift.Domain.Tests
             {
                 if ((i + 1) == numbers.Length)
                     break;
-                
-                var sum = numbers[i] + numbers[i + 1];
 
-                if (sum == -1 || sum == 1)
-                    result.Add(new[] { numbers[i], numbers[i+1] });
+                for (var j = i + 1; j < numbers.Length; j++)
+                {
+                    if (j == numbers.Length)
+                        break;
+
+                    var sum = numbers[i] + numbers[j];
+
+                    if (sum == -1 || sum == 1)
+                        result.Add(new[] { numbers[i], numbers[j] });
+                }
             }
 
             return result;
