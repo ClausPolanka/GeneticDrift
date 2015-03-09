@@ -13,7 +13,7 @@ namespace GeneticDrift.Domain.Tests
     {
         [TestCase(1, -2)]
         [TestCase(-1, 2)]
-        public void Permutation_containing_two_numbers(int nr1, int nr2)
+        public void Permutation_containing_two_numbers_beeing_an_oriented_pair(int nr1, int nr2)
         {
             var sut = new OrientedPairsFinder();
 
@@ -52,28 +52,44 @@ namespace GeneticDrift.Domain.Tests
             };
             Equalidator.AreEqual(actual, expected, true);
         }
+
+        [Test]
+        public void Spec_expample()
+        {
+            var permutation = new[] { 3, 1, 6, 5, -2, 4 };
+            var sut = new OrientedPairsFinder();
+
+            var orientedPairs = sut.Find(permutation);
+
+            var expected = new List<int[]>
+            {
+                //new[] { 3, -2 },
+                //new[] { 1, -2 },
+            };
+            Equalidator.AreEqual(orientedPairs, expected, true);
+        }
     }
 
     public class OrientedPairsFinder
     {
-        public IEnumerable<int[]> Find(params int[] numbers)
+        public IEnumerable<int[]> Find(params int[] permutation)
         {
             var result = new List<int[]>();
 
-            for (var i = 0; i < numbers.Length; i++)
+            for (var i = 0; i < permutation.Length; i++)
             {
-                if ((i + 1) == numbers.Length)
+                if ((i + 1) == permutation.Length)
                     break;
 
-                for (var j = i + 1; j < numbers.Length; j++)
+                for (var j = i + 1; j < permutation.Length; j++)
                 {
-                    if (j == numbers.Length)
+                    if (j == permutation.Length)
                         break;
 
-                    var sum = numbers[i] + numbers[j];
+                    var sum = permutation[i] + permutation[j];
 
                     if (sum == -1 || sum == 1)
-                        result.Add(new[] { numbers[i], numbers[j] });
+                        result.Add(new[] { permutation[i], permutation[j] });
                 }
             }
 
