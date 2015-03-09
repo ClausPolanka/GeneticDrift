@@ -164,7 +164,7 @@ namespace GeneticDrift.Domain.Tests
 
             var actual = new OrientedPairsToStringConverter().Convert(orderedOrientedPairs);
 
-            Assert.That(actual, Is.EqualTo("14 -163 162 -130 129 -45 44 -38 39 -29 28 18 -17 66 -65 71 -72 86 -85 96 -97 125 -124 133 -132 136 -137 153 -152 "), "oriented pairs");
+            Assert.That(actual, Is.EqualTo("14 -163 162 -130 129 -45 44 -38 39 -29 28 18 -17 66 -65 71 -72 86 -85 96 -97 125 -124 133 -132 136 -137 153 -152"), "oriented pairs");
         }
 
     }
