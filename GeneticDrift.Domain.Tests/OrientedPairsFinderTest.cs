@@ -24,7 +24,7 @@ namespace GeneticDrift.Domain.Tests
         }
 
         [TestCase(1, -2, 3)]
-        public void Permutation_containing_three_numbers(int nr1, int nr2, int nr3)
+        public void Permutation_containing_three_numbers_with_two_in_order_oriented_pairs(int nr1, int nr2, int nr3)
         {
             var sut = new OrientedPairsFinder();
 
@@ -37,6 +37,22 @@ namespace GeneticDrift.Domain.Tests
             };
             Equalidator.AreEqual(actual, expected, true);
         }
+
+        [TestCase(1, 3, -2)]
+        public void Permutation_containing_three_numbers_with_two_unordered_oriented_pairs(int nr1, int nr2, int nr3)
+        {
+            var sut = new OrientedPairsFinder();
+
+            var actual = sut.Find(nr1, nr2, nr3);
+
+            var expected = new List<int[]>
+            {
+                new[] { nr1, nr3 },
+                new[] { nr2, nr3 },
+            };
+            Equalidator.AreEqual(actual, expected, true);
+        }
+
     }
 
     public class OrientedPairsFinder
