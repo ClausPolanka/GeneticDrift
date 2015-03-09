@@ -31,7 +31,7 @@ namespace GeneticDrift.Domain.Tests
             var result = new List<int[]>();
             var sum = numbers[0] + numbers[1];
             
-            if (sum == -1)
+            if (sum == -1 || sum == 1)
                 result.Add(new[] { numbers[0], numbers[1] });
             
             return result;
