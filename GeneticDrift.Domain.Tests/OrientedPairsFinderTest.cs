@@ -54,7 +54,7 @@ namespace GeneticDrift.Domain.Tests
         }
 
         [Test]
-        public void Spec_expample()
+        public void Spec_expample_unordered()
         {
             var permutation = new[] { 3, 1, 6, 5, -2, 4 };
             var sut = new OrientedPairsFinder();
@@ -64,7 +64,23 @@ namespace GeneticDrift.Domain.Tests
             var expected = new List<int[]>
             {
                 new[] { 3, -2 },
+                new[] { 1, -2 }
+            };
+            Equalidator.AreEqual(orientedPairs, expected, true);
+        }
+
+        [Test]
+        public void Spec_expample()
+        {
+            var permutation = new[] { 3, 1, 6, 5, -2, 4 };
+            var sut = new OrientedPairsFinder();
+
+            var orientedPairs = sut.Find(permutation);
+
+            var expected = new List<int[]>
+            {
                 new[] { 1, -2 },
+                new[] { 3, -2 }
             };
             Equalidator.AreEqual(orientedPairs, expected, true);
         }
