@@ -136,7 +136,22 @@ namespace GeneticDrift.Domain.Tests
 
             var actual = new OrientedPairsToStringConverter().Convert(orderedOrientedPairs);
 
-            Assert.That(actual, Is.EqualTo("2 1 -2 3 -2"), "oriented pairs");
+            Assert.That(actual, Is.EqualTo("4 -7 8 1 -2 3 -2 6 -7"), "oriented pairs");
         }
+
+        //[Test]
+        public void Level_1_Input_3()
+        {
+            var permutation = new[] { 8, 0, -5, -6, -1, -3, -2, 4, 7 };
+
+            var orderedOrientedPairs = new OrientedPairsFinder()
+                .Find(permutation.Skip(1).ToArray())
+                .OrderBy(op => op[0]).ToList();
+
+            var actual = new OrientedPairsToStringConverter().Convert(orderedOrientedPairs);
+
+            Assert.That(actual, Is.EqualTo("4 -7 8 1 -2 3 -2 6 -7"), "oriented pairs");
+        }
+
     }
 }
