@@ -82,34 +82,22 @@ namespace GeneticDrift.Domain.Tests
                 new[] { 1, -2 },
                 new[] { 3, -2 }
             };
-            Equalidator.AreEqual(orientedPairs, expected, true);
+
+            Equalidator.AreEqual(orientedPairs.OrderBy(op => op[0]), expected, true);
         }
-    }
 
-    public class OrientedPairsFinder
-    {
-        public IEnumerable<int[]> Find(params int[] permutation)
+        [Test]
+        public void Spec_example_oriented_pairs_as_string()
         {
-            var result = new List<int[]>();
+            var permutation = new[] { 3, 1, 6, 5, -2, 4 };
+            var finder = new OrientedPairsFinder();
+            var orientedPairs = finder.Find(permutation);
+            var ordered = orientedPairs.OrderBy(op => op[0]).ToList();
+            var sut = new OrientedPairsToStringConverter();
+            
+            var actual = sut.Convert(ordered);
 
-            for (var i = 0; i < permutation.Length; i++)
-            {
-                if ((i + 1) == permutation.Length)
-                    break;
-
-                for (var j = i + 1; j < permutation.Length; j++)
-                {
-                    if (j == permutation.Length)
-                        break;
-
-                    var sum = permutation[i] + permutation[j];
-
-                    if (sum == -1 || sum == 1)
-                        result.Add(new[] { permutation[i], permutation[j] });
-                }
-            }
-
-            return result;
+            Assert.That(actual, Is.EqualTo("2 1 -2 3 -2"), "oriented pairs");
         }
     }
 }
