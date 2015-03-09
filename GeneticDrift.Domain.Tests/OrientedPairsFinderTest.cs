@@ -63,8 +63,8 @@ namespace GeneticDrift.Domain.Tests
 
             var expected = new List<int[]>
             {
-                //new[] { 3, -2 },
-                //new[] { 1, -2 },
+                new[] { 3, -2 },
+                new[] { 1, -2 },
             };
             Equalidator.AreEqual(orientedPairs, expected, true);
         }
