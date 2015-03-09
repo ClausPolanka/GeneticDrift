@@ -12,6 +12,7 @@ namespace GeneticDrift.Domain.Tests
     public class OrientedPairsFinderTest
     {
         [TestCase(1, -2)]
+        [TestCase(-1, 2)]
         public void Permutation_containing_two_numbers(int nr1, int nr2)
         {
             var sut = new OrientedPairsFinder();
@@ -30,7 +31,7 @@ namespace GeneticDrift.Domain.Tests
             var result = new List<int[]>();
             var sum = numbers[0] + numbers[1];
             
-            if (sum == -1)
+            if (sum == -1 || sum == 1)
                 result.Add(new[] { numbers[0], numbers[1] });
             
             return result;
