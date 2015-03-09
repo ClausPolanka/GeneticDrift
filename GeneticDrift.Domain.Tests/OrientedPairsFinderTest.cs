@@ -44,11 +44,18 @@ namespace GeneticDrift.Domain.Tests
         public IEnumerable<int[]> Find(params int[] numbers)
         {
             var result = new List<int[]>();
-            var sum = numbers[0] + numbers[1];
-            
-            if (sum == -1 || sum == 1)
-                result.Add(new[] { numbers[0], numbers[1] });
-            
+
+            for (var i = 0; i < numbers.Length; i++)
+            {
+                if ((i + 1) == numbers.Length)
+                    break;
+                
+                var sum = numbers[i] + numbers[i + 1];
+
+                if (sum == -1 || sum == 1)
+                    result.Add(new[] { numbers[i], numbers[i+1] });
+            }
+
             return result;
         }
     }
