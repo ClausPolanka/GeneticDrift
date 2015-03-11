@@ -61,8 +61,6 @@ namespace GeneticDrift.Domain.Tests
 
             var actual = Invert(length, permutation, orientedPairs);
 
-            Console.Error.Write(actual);
-
             Assert.That(actual, Is.EqualTo(expected), "inverted permutation");
         }
 
