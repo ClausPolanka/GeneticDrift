@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -10,8 +11,42 @@ namespace GeneticDrift.Domain.Tests
     [TestFixture]
     public class FindTheMinimalNumberOfInversionsNecessaryToSortAnArbitraryPermutationInAscendingOrder
     {
+        OrientedPairsFinder finder = new OrientedPairsFinder();
+        PermutationInverter inverter = new PermutationInverter();
+        
         [TestCase("8 0 3 1 6 5 -2 4 7")]
         public void TestName(string input)
+        {
+
+            var length = input[0].ToString();
+            var permString = input.Substring(2);
+            var permutation = input.Split(' ').Skip(1).Select(int.Parse).ToList();
+            var pairs = finder.Find(permutation.ToArray());
+            
+            var scoresPair = new List<Tuple<int, int[]>>();
+
+            foreach (var pair in pairs)
+            {
+                var newInput = string.Format("{0} {1} {2} {3} {4} {5}", length, permString, pair[0], permutation.IndexOf(pair[0]), pair[1], permutation.IndexOf(pair[1]));
+                
+                var score = CalcScore(newInput);
+
+                scoresPair.Add(new Tuple<int, int[]>(score, pair));
+            }
+
+
+        }
+
+        private int CalcScore(string newInput)
+        {
+            var invPermString = inverter.InvertPermutation(newInput);
+            var invPerm = invPermString.Split(' ').Skip(1).Select(int.Parse).ToList();
+            var newPair = finder.Find(invPerm.ToArray());
+            var score = newPair.Count();
+            return score;
+        }
+
+        public void old(string input)
         {
             var perm = ToIntArray(input);
 
