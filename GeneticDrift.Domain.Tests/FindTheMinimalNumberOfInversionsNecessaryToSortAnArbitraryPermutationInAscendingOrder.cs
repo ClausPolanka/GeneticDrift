@@ -19,25 +19,38 @@ namespace GeneticDrift.Domain.Tests
             var ops = finder.Find(perm).ToList();
 
             var op1 = CreateOrientedPair(ops[0], perm);
-            var input1 = input + " " + op1.Xi + " " + op1.i + " " + op1.Xj + " " + op1.j;
+            var input1 = string.Format("{0} {1} {2} {3} {4}", input, op1.Xi, op1.i, op1.Xj, op1.j);
             
             var op2 = CreateOrientedPair(ops[1], perm);
-            var input2 = input + " " + op2.Xi + " " + op2.i + " " + op2.Xj + " " + op2.j;
+            var input2 = string.Format("{0} {1} {2} {3} {4}", input, op2.Xi, op2.i, op2.Xj, op2.j);
 
             var inverter = new PermutationInverter();
 
             var invertPermutation1 = inverter.InvertPermutation(input1);
-            var ops1 = finder.Find(ToIntArray(invertPermutation1));
+            var ops1 = finder.Find(ToIntArray(invertPermutation1)).ToList();
 
             var invertPermutation2 = inverter.InvertPermutation(input2);
-            var ops2 = finder.Find(ToIntArray(invertPermutation2));
+            var ops2 = finder.Find(ToIntArray(invertPermutation2)).ToList();
 
+            var newInput = input[0] + " " + invertPermutation1;
+            var op11 = CreateOrientedPair(ops1[0], ToIntArray(newInput));
+            var input11 = string.Format("{0} {1} {2} {3} {4}", newInput, op11.Xi, op11.i, op11.Xj, op11.j);
+            var op12 = CreateOrientedPair(ops1[1], ToIntArray(newInput));
+            var input12 = string.Format("{0} {1} {2} {3} {4}", newInput, op12.Xi, op12.i, op12.Xj, op12.j);
+            var op13 = CreateOrientedPair(ops1[2], ToIntArray(newInput));
+            var input13 = string.Format("{0} {1} {2} {3} {4}", newInput, op13.Xi, op13.i, op13.Xj, op13.j);
 
+            var invPerm11 = inverter.InvertPermutation(input11);
+            var ops11 = finder.Find(ToIntArray(invPerm11)).ToList();
+            var invPerm12 = inverter.InvertPermutation(input12);
+            var ops12 = finder.Find(ToIntArray(invPerm12)).ToList();
+            var invPerm13 = inverter.InvertPermutation(input13);
+            var ops13 = finder.Find(ToIntArray(invPerm13)).ToList();
         }
 
-        private static int[] ToIntArray(string invertPermutation1)
+        private static int[] ToIntArray(string permutationWithPrependedLength)
         {
-            return invertPermutation1.Split(' ').Skip(1).Select(int.Parse).ToArray();
+            return permutationWithPrependedLength.Split(' ').Skip(1).Select(int.Parse).ToArray();
         }
 
         private static OrientedPair CreateOrientedPair(int[] oldOp, int[] perm)
