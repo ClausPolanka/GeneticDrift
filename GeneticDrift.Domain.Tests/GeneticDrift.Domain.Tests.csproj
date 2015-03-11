@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FindTheMinimalNumberOfInversionsNecessaryToSortAnArbitraryPermutationInAscendingOrder.cs" />
     <Compile Include="PermutationInverterTest.cs" />
     <Compile Include="OrientedPairsFinderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
