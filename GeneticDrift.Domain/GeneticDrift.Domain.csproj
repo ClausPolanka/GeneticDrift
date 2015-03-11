@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrientedPair.cs" />
     <Compile Include="OrientedPairsFinder.cs" />
     <Compile Include="OrientedPairsToStringConverter.cs" />
+    <Compile Include="PermutationInverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
